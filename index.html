@@ -1,132 +1,493 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#9fd9ff">
-<title>You're Invited</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Lora:wght@500;600;700&display=swap');
-:root{--sky:#91d4ff;--sky2:#dff4ff;--silver:#c7cdd5;--silver2:#8f98a5;--ink:#52606f}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;display:grid;place-items:center;padding:18px;overflow:hidden;font-family:"Lora",Georgia,"Times New Roman",serif;color:var(--ink);background:linear-gradient(135deg,#edfaff,#a9ddff 48%,#f7fcff);position:relative}
-body:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;background-image:radial-gradient(circle,rgba(255,255,255,.95) 0 1px,transparent 2px),radial-gradient(circle,rgba(255,255,255,.65) 0 1px,transparent 2px);background-size:100px 100px,150px 150px;background-position:20px 10px,65px 45px;animation:drift 20s linear infinite}
-@keyframes drift{to{transform:translateY(-100px)}}
-.card{width:min(94vw,620px);min-height:620px;padding:54px 34px;display:grid;place-items:center;text-align:center;position:relative;z-index:1;background:rgba(255,255,255,.93);border:1px solid rgba(255,255,255,.9);border-radius:34px;box-shadow:0 28px 80px rgba(73,130,164,.24),inset 0 0 0 1px rgba(160,175,190,.18);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px)}
-.card:before{content:"";position:absolute;inset:12px;border:1px solid rgba(158,173,190,.48);border-radius:26px;pointer-events:none}
-.corner{position:absolute;width:78px;height:78px;border-color:rgba(91,183,245,.55);border-style:solid;pointer-events:none}.tl{top:24px;left:24px;border-width:2px 0 0 2px;border-radius:20px 0 0}.tr{top:24px;right:24px;border-width:2px 2px 0 0;border-radius:0 20px 0 0}.bl{bottom:24px;left:24px;border-width:0 0 2px 2px;border-radius:0 0 0 20px}.br{bottom:24px;right:24px;border-width:0 2px 2px 0;border-radius:0 0 20px}
-.content{width:100%;max-width:500px;position:relative;z-index:2}.tiny{text-transform:uppercase;letter-spacing:.25em;font-size:.76rem;font-family:Arial,sans-serif;font-weight:600;color:var(--silver2);margin-bottom:18px}h1{margin:0;font-size:clamp(3.2rem,11vw,5.5rem);line-height:.95;font-family:"Dancing Script","Segoe Script","Brush Script MT",cursive;font-weight:700;color:#687482;text-shadow:1px 2px 0 #fff}.names{margin:16px 0 0;font-size:clamp(2rem,6vw,2.8rem);font-family:"Dancing Script","Segoe Script","Brush Script MT",cursive;font-weight:600;color:#4d9fd8}.divider{width:110px;height:1px;margin:26px auto;background:linear-gradient(90deg,transparent,var(--silver),transparent);position:relative}.divider:after{content:"·";position:absolute;left:50%;top:50%;transform:translate(-50%,-53%);padding:0 9px;font-size:18px;color:#5db7ee;background:rgba(255,255,255,.86)}
-.question{margin:0 auto;max-width:430px;font-size:clamp(1.28rem,4.2vw,1.62rem);line-height:1.6;font-weight:600;color:#2f3d4d}.details{margin-top:18px;color:#536171;font-family:Arial,sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.07em}
-.button-zone{width:min(100%,410px);height:155px;margin:24px auto 0;position:relative}.button-zone button{position:absolute;top:48px;width:142px;height:58px;border-radius:999px;border:2px solid rgba(70,105,130,.28);font:700 1rem/1 Arial,sans-serif;letter-spacing:.01em;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;transition:left .42s cubic-bezier(.22,1,.36,1),top .42s cubic-bezier(.22,1,.36,1),transform .24s ease,box-shadow .24s ease}.yes{left:calc(50% - 154px);background:linear-gradient(135deg,#78c8f6,#2e9edb);color:#ffffff;text-shadow:0 1px 2px rgba(25,78,109,.35);box-shadow:0 10px 24px rgba(53,151,207,.38)}.yes:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 14px 30px rgba(46,158,219,.5)}.no{left:calc(50% + 12px);background:linear-gradient(135deg,#d6dce3,#9da7b3);color:#263342;text-shadow:0 1px 1px rgba(255,255,255,.6);box-shadow:0 10px 24px rgba(75,89,105,.25)}.hint{margin-top:0;font-size:.78rem;letter-spacing:.08em;font-family:Arial,sans-serif;font-weight:600;color:#677482}
-.response{display:none}.response.show{display:block;animation:in .7s cubic-bezier(.2,.9,.2,1) forwards}.response h2{margin:0;font-size:clamp(3rem,9vw,4.8rem);font-family:"Dancing Script","Segoe Script","Brush Script MT",cursive;font-weight:700;color:#687482}.response p{margin:20px auto 0;max-width:420px;font-size:1.2rem;line-height:1.65;font-weight:600;color:#3e4c5b}.little{margin-top:24px;font-size:.78rem;font-family:Arial,sans-serif;font-weight:600;color:#7aaed0;letter-spacing:.12em;text-transform:uppercase}@keyframes in{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
-@media(max-width:600px){.card{min-height:580px;padding:48px 22px;border-radius:28px}.card:before{inset:9px;border-radius:21px}.corner{width:58px;height:58px}.tl{top:18px;left:18px}.tr{top:18px;right:18px}.bl{bottom:18px;left:18px}.br{bottom:18px;right:18px}.button-zone{height:180px}.button-zone button{width:128px;height:56px;font-size:.96rem}.yes{left:calc(50% - 146px)}.no{left:calc(50% + 14px)}.hint{max-width:260px;margin:0 auto}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#9fd9ff" />
+  <title>Kelsey & Kristine — Wedding RSVP</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Lora:wght@500;600;700&display=swap');
+
+    :root {
+      --sky: #72bfe8;
+      --sky-dark: #2e86b8;
+      --sky-soft: #e4f5ff;
+      --silver: #aab4bf;
+      --silver-dark: #687583;
+      --ink: #263746;
+      --white: rgba(255, 255, 255, 0.95);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { min-height: 100%; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      color: var(--ink);
+      font-family: "Lora", Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at 16% 13%, rgba(255,255,255,.9) 0 1.5%, transparent 1.6%),
+        radial-gradient(circle at 85% 19%, rgba(255,255,255,.7) 0 1.2%, transparent 1.3%),
+        linear-gradient(135deg, #effaff 0%, #a9ddff 48%, #f7fcff 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .55;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,.95) 0 1px, transparent 2px),
+        radial-gradient(circle, rgba(255,255,255,.6) 0 1px, transparent 2px);
+      background-size: 100px 100px, 150px 150px;
+      background-position: 20px 10px, 65px 45px;
+      animation: drift 20s linear infinite;
+    }
+
+    @keyframes drift {
+      to { transform: translateY(-100px); }
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      width: min(94vw, 620px);
+      min-height: 620px;
+      padding: 54px 34px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background: var(--white);
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: 34px;
+      box-shadow:
+        0 28px 80px rgba(73,130,164,.24),
+        inset 0 0 0 1px rgba(160,175,190,.18);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(158,173,190,.48);
+      border-radius: 26px;
+      pointer-events: none;
+    }
+
+    .corner {
+      position: absolute;
+      width: 78px;
+      height: 78px;
+      border-color: rgba(91,183,245,.55);
+      border-style: solid;
+      pointer-events: none;
+    }
+
+    .tl { top:24px; left:24px; border-width:2px 0 0 2px; border-radius:20px 0 0 0; }
+    .tr { top:24px; right:24px; border-width:2px 2px 0 0; border-radius:0 20px 0 0; }
+    .bl { bottom:24px; left:24px; border-width:0 0 2px 2px; border-radius:0 0 0 20px; }
+    .br { bottom:24px; right:24px; border-width:0 2px 2px 0; border-radius:0 0 20px 0; }
+
+    .content {
+      width: 100%;
+      max-width: 500px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .tiny {
+      margin-bottom: 18px;
+      color: var(--silver-dark);
+      font: 700 .76rem/1.2 Arial, sans-serif;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      color: #5f6e7c;
+      font: 700 clamp(3.2rem, 11vw, 5.5rem)/.95 "Dancing Script", "Segoe Script", "Brush Script MT", cursive;
+      text-shadow: 1px 2px 0 #fff;
+    }
+
+    .names {
+      margin: 16px 0 0;
+      color: #398fc2;
+      font: 600 clamp(2rem, 6vw, 2.8rem)/1.1 "Dancing Script", "Segoe Script", "Brush Script MT", cursive;
+    }
+
+    .divider {
+      width: 110px;
+      height: 1px;
+      margin: 26px auto;
+      background: linear-gradient(90deg, transparent, var(--silver), transparent);
+      position: relative;
+    }
+
+    .divider::after {
+      content: "·";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -53%);
+      padding: 0 9px;
+      color: #4ea8dc;
+      font-size: 18px;
+      background: rgba(255,255,255,.95);
+    }
+
+    .question {
+      max-width: 430px;
+      margin: 0 auto;
+      color: #253544;
+      font-size: clamp(1.2rem, 4.2vw, 1.58rem);
+      line-height: 1.6;
+      font-weight: 600;
+    }
+
+    .details {
+      margin-top: 18px;
+      color: #4f5f6e;
+      font: 700 .92rem/1.4 Arial, sans-serif;
+      letter-spacing: .07em;
+    }
+
+    .button-zone {
+      width: 100%;
+      height: 150px;
+      margin-top: 26px;
+      position: relative;
+    }
+
+    button {
+      width: 148px;
+      height: 58px;
+      border-radius: 999px;
+      border: 2px solid rgba(55,82,103,.30);
+      font: 700 1rem/1 Arial, sans-serif;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 10px 24px rgba(55,82,103,.20);
+    }
+
+    #yesBtn {
+      position: absolute;
+      left: calc(50% - 160px);
+      top: 42px;
+      color: #fff;
+      background: linear-gradient(135deg, #65bce9, #2387bb);
+      text-shadow: 0 1px 2px rgba(25,78,109,.35);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    #yesBtn:hover,
+    #yesBtn:focus-visible {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 14px 30px rgba(46,134,184,.42);
+      outline: none;
+    }
+
+    /* The NO button becomes fixed only through JavaScript.
+       JS always clamps it inside the viewport. */
+    #noBtn {
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 50;
+      color: #253240;
+      background: linear-gradient(135deg, #d8dee5, #a3adb8);
+      text-shadow: 0 1px 1px rgba(255,255,255,.65);
+      transition: left .34s cubic-bezier(.2,.9,.2,1), top .34s cubic-bezier(.2,.9,.2,1), transform .18s ease;
+    }
+
+    #noBtn:focus-visible {
+      outline: 3px solid rgba(46,134,184,.4);
+      outline-offset: 4px;
+    }
+
+    .hint {
+      margin-top: 2px;
+      color: #596b7a;
+      font: 600 .78rem/1.4 Arial, sans-serif;
+      letter-spacing: .08em;
+    }
+
+    .response {
+      display: none;
+    }
+
+    .response.show {
+      display: block;
+      animation: responseIn .7s cubic-bezier(.2,.9,.2,1) both;
+    }
+
+    .response h2 {
+      margin: 0;
+      color: #5f6e7c;
+      font: 700 clamp(3rem, 9vw, 4.8rem)/1 "Dancing Script", "Segoe Script", "Brush Script MT", cursive;
+    }
+
+    .response p {
+      max-width: 420px;
+      margin: 20px auto 0;
+      color: #334454;
+      font-size: 1.18rem;
+      line-height: 1.65;
+      font-weight: 600;
+    }
+
+    .little {
+      margin-top: 24px;
+      color: #579bc0;
+      font: 600 .78rem/1.3 Arial, sans-serif;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    @keyframes responseIn {
+      from { opacity: 0; transform: translateY(10px) scale(.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 12px; }
+      .card { min-height: 580px; padding: 48px 22px; border-radius: 28px; }
+      .card::before { inset: 9px; border-radius: 21px; }
+      .corner { width:58px; height:58px; }
+      .tl { top:18px; left:18px; }
+      .tr { top:18px; right:18px; }
+      .bl { bottom:18px; left:18px; }
+      .br { bottom:18px; right:18px; }
+      .button-zone { height: 180px; }
+      button { width: 134px; height: 56px; font-size: .95rem; }
+      #yesBtn { left: calc(50% - 145px); top: 44px; }
+    }
+  </style>
 </head>
 <body>
-<main class="card">
-  <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
-  <section class="content" id="invite">
-    <div class="tiny">A Little Invitation</div>
-    <h1>You're Invited</h1>
-    <!-- Change these names -->
-    <div class="names">Kelsey &amp; Kristine</div>
-    <div class="divider"></div>
-    <p class="question">We would love to celebrate this beautiful day with you. Will you be joining us?</p>
-    <!-- Change the wedding details -->
-    <div class="details">Thursday, December 10, 2026 · 4:00 PM</div>
-    <div class="button-zone" id="zone">
-      <button class="yes" id="yesBtn" type="button">Yes, I'll be there</button>
-      <button class="no" id="noBtn" type="button" aria-label="No">No</button>
-    </div>
-    <div class="hint">Try saying no.</div>
-  </section>
-  <section class="content response" id="response">
-    <div class="tiny">RSVP Received</div>
-    <h2>Yay. It's a date.</h2>
-    <p>We're so happy you'll be there to celebrate with us. Your presence will make the day even more special.</p>
-    <div class="little">See you at the wedding</div>
-  </section>
-</main>
-<script>
-const noBtn=document.getElementById('noBtn'), yesBtn=document.getElementById('yesBtn');
-const invite=document.getElementById('invite'), response=document.getElementById('response');
-let escaping=false;
-let lastMove=0;
+  <main class="card">
+    <span class="corner tl"></span>
+    <span class="corner tr"></span>
+    <span class="corner bl"></span>
+    <span class="corner br"></span>
 
-const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+    <section class="content" id="invite">
+      <div class="tiny">A Little Invitation</div>
+      <h1>You're Invited</h1>
+      <div class="names">Kelsey &amp; Kristine</div>
+      <div class="divider"></div>
 
-function moveNoButton(){
-  const now=performance.now();
-  if(now-lastMove<260) return;
-  lastMove=now;
-  escaping=true;
+      <p class="question">
+        We would love to celebrate this beautiful day with you.
+        Will you be joining us?
+      </p>
 
-  const pad=18;
-  const bw=noBtn.offsetWidth;
-  const bh=noBtn.offsetHeight;
-  const maxX=Math.max(pad,window.innerWidth-bw-pad);
-  const maxY=Math.max(pad,window.innerHeight-bh-pad);
+      <div class="details">Thursday, December 10, 2026 · 4:00 PM</div>
 
-  const rect=noBtn.getBoundingClientRect();
-  const oldX=rect.left;
-  const oldY=rect.top;
-  let x,y,tries=0;
+      <div class="button-zone" id="buttonZone">
+        <button id="yesBtn" type="button">Yes, I'll be there</button>
+      </div>
 
-  // Pick a new location anywhere around the whole screen,
-  // while making sure it is genuinely far from where it was.
-  do{
-    x=pad+Math.random()*(maxX-pad);
-    y=pad+Math.random()*(maxY-pad);
-    tries++;
-  }while(Math.hypot(x-oldX,y-oldY)<150 && tries<30);
+      <div class="hint">Try saying no.</div>
+    </section>
 
-  noBtn.style.position='fixed';
-  noBtn.style.left=x+'px';
-  noBtn.style.top=y+'px';
-  noBtn.style.zIndex='50';
-  noBtn.style.transform='scale(.96)';
-  setTimeout(()=>noBtn.style.transform='scale(1)',220);
-}
+    <section class="content response" id="response">
+      <div class="tiny">RSVP Received</div>
+      <h2>Yay. It's a date.</h2>
+      <p>
+        We're so happy you'll be there to celebrate with us.
+        Your presence will make the day even more special.
+      </p>
+      <div class="little">See you at the wedding</div>
+    </section>
+  </main>
 
-// Desktop: it senses the cursor before the cursor reaches it.
-document.addEventListener('mousemove',e=>{
-  if(window.matchMedia('(pointer: coarse)').matches) return;
-  const r=noBtn.getBoundingClientRect();
-  const cx=r.left+r.width/2, cy=r.top+r.height/2;
-  const distance=Math.hypot(e.clientX-cx,e.clientY-cy);
-  if(distance<105) moveNoButton();
-});
+  <button id="noBtn" type="button" aria-label="No">No</button>
 
-// Extra insurance if the cursor somehow lands directly on it.
-noBtn.addEventListener('mouseenter',()=>moveNoButton());
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const invite = document.getElementById('invite');
+    const response = document.getElementById('response');
 
-// Mobile/tablet: every tap sends it somewhere new.
-noBtn.addEventListener('pointerdown',e=>{
-  if(e.pointerType==='touch'){
-    e.preventDefault();
-    moveNoButton();
-  }
-});
+    let moving = false;
+    let lastMove = 0;
 
-noBtn.addEventListener('click',e=>{
-  e.preventDefault();
-  moveNoButton();
-});
+    function viewportSize() {
+      return {
+        width: document.documentElement.clientWidth,
+        height: document.documentElement.clientHeight
+      };
+    }
 
-yesBtn.addEventListener('click',()=>{
-  invite.style.display='none';
-  response.classList.add('show');
-});
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    }
 
-window.addEventListener('resize',()=>{
-  if(escaping){
-    const r=noBtn.getBoundingClientRect();
-    const x=clamp(r.left,18,Math.max(18,window.innerWidth-noBtn.offsetWidth-18));
-    const y=clamp(r.top,18,Math.max(18,window.innerHeight-noBtn.offsetHeight-18));
-    noBtn.style.left=x+'px';
-    noBtn.style.top=y+'px';
-  }
-});
-</script>
+    function buttonCenter() {
+      const rect = noBtn.getBoundingClientRect();
+      return {
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2
+      };
+    }
+
+    function isTooClose(candidate, cursorX, cursorY, minDistance) {
+      const dx = candidate.x - cursorX;
+      const dy = candidate.y - cursorY;
+      return Math.hypot(dx, dy) < minDistance;
+    }
+
+    function overlapsYes(left, top) {
+      const noRect = {
+        left,
+        top,
+        right: left + noBtn.offsetWidth,
+        bottom: top + noBtn.offsetHeight
+      };
+      const yesRect = yesBtn.getBoundingClientRect();
+      const gap = 24;
+
+      return !(
+        noRect.right + gap < yesRect.left ||
+        noRect.left - gap > yesRect.right ||
+        noRect.bottom + gap < yesRect.top ||
+        noRect.top - gap > yesRect.bottom
+      );
+    }
+
+    function moveNoButton(cursorX = null, cursorY = null) {
+      const now = performance.now();
+      if (moving || now - lastMove < 280) return;
+
+      const { width, height } = viewportSize();
+      const padding = 14;
+      const buttonWidth = noBtn.offsetWidth;
+      const buttonHeight = noBtn.offsetHeight;
+      const maxLeft = Math.max(padding, width - buttonWidth - padding);
+      const maxTop = Math.max(padding, height - buttonHeight - padding);
+
+      const current = buttonCenter();
+      const minDistance = Math.min(220, Math.max(120, width * 0.22));
+
+      let best = null;
+
+      // Try many positions. Every candidate is clamped inside the viewport.
+      for (let i = 0; i < 60; i++) {
+        const left = padding + Math.random() * Math.max(1, maxLeft - padding);
+        const top = padding + Math.random() * Math.max(1, maxTop - padding);
+        const candidate = {
+          x: left + buttonWidth / 2,
+          y: top + buttonHeight / 2,
+          left,
+          top
+        };
+
+        if (cursorX !== null && isTooClose(candidate, cursorX, cursorY, minDistance)) continue;
+        if (overlapsYes(left, top)) continue;
+        if (Math.hypot(candidate.x - current.x, candidate.y - current.y) < 90) continue;
+
+        best = candidate;
+        break;
+      }
+
+      // Guaranteed fallback: calculate a valid opposite-side position.
+      if (!best) {
+        let left = current.x < width / 2 ? maxLeft : padding;
+        let top = current.y < height / 2 ? maxTop : padding;
+
+        if (cursorX !== null && isTooClose({x:left + buttonWidth/2, y:top + buttonHeight/2}, cursorX, cursorY, 100)) {
+          top = clamp(height - top - buttonHeight, padding, maxTop);
+        }
+
+        best = { left: clamp(left, padding, maxLeft), top: clamp(top, padding, maxTop) };
+      }
+
+      moving = true;
+      lastMove = now;
+      noBtn.style.left = best.left + 'px';
+      noBtn.style.top = best.top + 'px';
+
+      window.setTimeout(() => { moving = false; }, 360);
+    }
+
+    function placeInitialNoButton() {
+      const yesRect = yesBtn.getBoundingClientRect();
+      const { width, height } = viewportSize();
+      const padding = 14;
+      const left = clamp(yesRect.right + 24, padding, width - noBtn.offsetWidth - padding);
+      const top = clamp(yesRect.top, padding, height - noBtn.offsetHeight - padding);
+      noBtn.style.left = left + 'px';
+      noBtn.style.top = top + 'px';
+    }
+
+    // Desktop: the button escapes before the cursor reaches it.
+    window.addEventListener('pointermove', (event) => {
+      if (event.pointerType === 'touch') return;
+
+      const rect = noBtn.getBoundingClientRect();
+      const nearestX = clamp(event.clientX, rect.left, rect.right);
+      const nearestY = clamp(event.clientY, rect.top, rect.bottom);
+      const distance = Math.hypot(event.clientX - nearestX, event.clientY - nearestY);
+
+      if (distance < 95) {
+        moveNoButton(event.clientX, event.clientY);
+      }
+    }, { passive: true });
+
+    // Mobile: tapping No makes it jump to another safe place.
+    noBtn.addEventListener('pointerdown', (event) => {
+      if (event.pointerType === 'touch') {
+        event.preventDefault();
+        moveNoButton(event.clientX, event.clientY);
+      }
+    });
+
+    // Mouse/touch fallback: No never submits or stays put.
+    noBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      if (event.detail > 0) {
+        moveNoButton(event.clientX || null, event.clientY || null);
+      }
+    });
+
+    // Keyboard users can also trigger the playful movement.
+    noBtn.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        moveNoButton();
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      const { width, height } = viewportSize();
+      const rect = noBtn.getBoundingClientRect();
+      const left = clamp(rect.left, 14, width - noBtn.offsetWidth - 14);
+      const top = clamp(rect.top, 14, height - noBtn.offsetHeight - 14);
+      noBtn.style.left = left + 'px';
+      noBtn.style.top = top + 'px';
+    });
+
+    yesBtn.addEventListener('click', () => {
+      noBtn.style.display = 'none';
+      invite.style.display = 'none';
+      response.classList.add('show');
+    });
+
+    // Wait until fonts/layout have settled before placing the button.
+    window.addEventListener('load', placeInitialNoButton);
+    setTimeout(placeInitialNoButton, 250);
+  </script>
 </body>
 </html>
